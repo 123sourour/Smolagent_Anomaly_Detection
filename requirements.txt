@@ -1,0 +1,10 @@
+streamlit
+plotly
+numpy
+matplotlib
+pandas
+scikit-learn
+smolagents
+json
+tempfile
+os
