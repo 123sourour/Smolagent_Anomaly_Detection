@@ -46,42 +46,17 @@ class LoadDatasetTool(Tool):
                 return df.to_json(orient='records', date_format='iso')
 
             elif dataset_name:
-                # Create sample datasets (you'll need to have these files or create synthetic data)
                 if dataset_name == "Credit Card Transactions":
-                    # Create synthetic credit card data
-                    np.random.seed(42)
-                    n_samples = 1000
-                    df = pd.DataFrame({
-                        'amount': np.random.exponential(50, n_samples),
-                        'time_of_day': np.random.uniform(0, 24, n_samples),
-                        'location': np.random.choice(['US', 'EU', 'ASIA'], n_samples),
-                        'device_type': np.random.choice(['mobile', 'desktop', 'tablet'], n_samples),
-                        'label': np.random.choice([0, 1], n_samples, p=[0.95, 0.05])
-                    })
+                    dataset = pd.read_csv("credit_card_fraud_dataset.csv")
+                    df = dataset.rename(columns={'IsFraud': 'label'})
 
                 elif dataset_name == "IoT Sensor Data":
-                    # Create synthetic IoT data
-                    np.random.seed(42)
-                    n_samples = 800
-                    df = pd.DataFrame({
-                        'temperature': np.random.normal(25, 5, n_samples),
-                        'humidity': np.random.normal(50, 15, n_samples),
-                        'pressure': np.random.normal(1013, 10, n_samples),
-                        'motion': np.random.choice([0, 1], n_samples, p=[0.9, 0.1]),
-                        'label': np.random.choice([0, 1], n_samples, p=[0.92, 0.08])
-                    })
+                    dataset = pd.read_csv("Occupancy.csv")
+                    df = dataset.rename(columns={'Occupancy': 'label'})
 
                 elif dataset_name == "Network Logs":
-                    # Create synthetic network data
-                    np.random.seed(42)
-                    n_samples = 1200
-                    df = pd.DataFrame({
-                        'packet_size': np.random.exponential(500, n_samples),
-                        'response_time': np.random.exponential(0.2, n_samples),
-                        'protocol': np.random.choice(['TCP', 'UDP', 'ICMP'], n_samples),
-                        'source_ip': np.random.choice(['192.168.1.' + str(i) for i in range(1, 51)], n_samples),
-                        'label': np.random.choice([0, 1], n_samples, p=[0.97, 0.03])
-                    })
+                    dataset = pd.read_csv("cybersecurity_intrusion_data.csv")
+                    df = dataset.rename(columns={'attack_detected': 'label'})
                 else:
                     raise ValueError(f"Unknown sample dataset: {dataset_name}")
 
